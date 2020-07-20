@@ -15,17 +15,20 @@ GraphQL API able to perfoms querys and mutations to posts a specific links
 * Prisma
 * SQLite
 * Nodemon _(Development)_
-
-**Based on Official [GraphQL Tutorial][graphl_url]**   
-
+ 
 ## :file_folder: Database ##
 - The structure of the model,DBMS(SQLite) and prisma client its include in `prisma/schema.prisma`
 - Make first migration(create database and name migration) with `npx prisma migrate save --experimental`
 - Run migration(create link table) with `npx prisma migrate up --experimental`
-- Create your prisma client model `with npx prisma generate`
+- Create your prisma client model with `npx prisma generate`
 
 ## :black_nib: Author
 -  [Jairo Salazar][github_url] Backend Developer (Platzi Master Student)
 
+## :telescope: References
+- [How to GraphQL][graphl_url]
+- [Prisma Documentation][prisma_url]
+
 [graphl_url]:https://www.howtographql.com/
 [github_url]: https://github.com/jsv1280
+[prisma_url]: https://www.prisma.io/docs/
