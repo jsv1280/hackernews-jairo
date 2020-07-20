@@ -9,8 +9,8 @@ let links = [
     },
     {
         id: 'link-2',
-        url: 'https://ourcodeworld.com',
-        description: 'Blog sdkcarlos'
+        url: 'https://theunemployedprogrammer.com',
+        description: 'Blog jsv1280'
     }
 ]
 
@@ -35,7 +35,13 @@ const resolvers = {
             return link
         },
         updateLink: (parent,args) => {
-            let linkMatch = links.find(function(element){
+
+            let linkMatch = {}
+            linkMatch.id = ''
+            linkMatch.description = ''
+            linkMatch.url = ''
+
+            linkMatch = links.find(function(element){
                 
                 if(element.id == args.id ){
                     return element
@@ -43,32 +49,21 @@ const resolvers = {
             })
 
             if(linkMatch){
-                link.url = args.url
-                link.description = args.description
+                linkMatch.url = (args.url) ? args.url : linkMatch.url
+                linkMatch.description = (args.description) ? args.description : linkMatch.description
             }
-            else {
-                linkMatch.id = ''
-                linkMatch.description = ''
-                linkMatch.url = ''
-            }
-
+    
             return linkMatch
            
         },
         deleteLink: (parent,args) => {
-            let linkMatch = links.filter(function(element){
-                
-                if(element.id != args.id ){
-                    return element
-                }
-                else {
-                    responseLink = {...element}
-                }
-            })
+            let indexMatch = links.findIndex( element => element.id == args.id)
 
-            links = linkMatch
+            let deletedElement = {...links[indexMatch]}
 
-            return responseLink
+            links.splice(indexMatch,1)
+
+            return deletedElement
         }
         
     },
