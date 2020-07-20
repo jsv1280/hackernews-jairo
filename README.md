@@ -13,3 +13,4 @@ GraphQL API able to perfoms querys and mutations to posts a specific links
 -  [Jairo Salazar][github_url] Backend Developer (Platzi Master Student)
 
 [graphl_url]:https://www.howtographql.com/
+[github_url]: https://github.com/jsv1280
