@@ -14,6 +14,7 @@ GraphQL API able to perfoms querys and mutations to posts a specific links
 * Node
 * Prisma
 * SQLite
+* JWT (Json Web Tokens)
 * Nodemon _(Development)_
  
 ## :file_folder: Database ##
