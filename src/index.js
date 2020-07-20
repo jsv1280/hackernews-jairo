@@ -1,4 +1,7 @@
 const { GraphQLServer } = require('graphql-yoga')
+const { PrismaClient } = require('@prisma/client')
+
+const prisma = new PrismaClient()
 
 // Mock data
 let links = [
@@ -20,50 +23,38 @@ let contador = links.length
 const resolvers = {
     Query: {
         info: () => 'Hackernews Jairo',
-        feed: () => links
+        feed: async (parent, args, context) => {
+                return context.prisma.link.findMany()
+        },
     },
     Mutation: {
-        post: (parent,args) => {
-            const link = {
-                id: 'link' + contador++,
-                description: args.description,
-                url: args.url
-            }
-
-            links.push(link)
-
-            return link
-        },
-        updateLink: (parent,args) => {
-
-            let linkMatch = {}
-            linkMatch.id = ''
-            linkMatch.description = ''
-            linkMatch.url = ''
-
-            linkMatch = links.find(function(element){
-                
-                if(element.id == args.id ){
-                    return element
-                }
+        post: (parent,args,context,info) => {
+            const newLink = context.prisma.link.create({
+                data: {
+                  url: args.url,
+                  description: args.description,
+                },
             })
 
-            if(linkMatch){
-                linkMatch.url = (args.url) ? args.url : linkMatch.url
-                linkMatch.description = (args.description) ? args.description : linkMatch.description
-            }
-    
-            return linkMatch
+            return newLink
+        },
+        updateLink: async (parent,args,context,info) => {
+
+            const linkUpdated = await context.prisma.link.update({
+                where: { id: parseInt(args.id) },
+                data: { url: args.url, description: args.description },
+            })
+
+            return linkUpdated
            
         },
-        deleteLink: (parent,args) => {
-            let indexMatch = links.findIndex( element => element.id == args.id)
+        deleteLink: async (parent,args,context,info) => {
 
-            let deletedElement = {...links[indexMatch]}
+            const deleteLink = await context.prisma.link.delete({
+                where: { id: parseInt(args.id) },
+            })
 
-            links.splice(indexMatch,1)
-
-            return deletedElement
+            return deleteLink
         }
         
     },
@@ -79,7 +70,10 @@ const resolvers = {
 // Instantiate Server
 const server = new GraphQLServer({
     typeDefs:'./src/schema.graphql',
-    resolvers
+    resolvers,
+    context: {
+      prisma,
+    }
 })
 
 server.start(()=> console.log('Server http://localhost:4000'))
