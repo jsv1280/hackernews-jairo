@@ -1,6 +1,6 @@
 # GraphQL Hackernews
 
-GraphQL API able to perfoms querys and mutations to posts a specific links
+GraphQL API able to perfoms querys and mutations(CRUD) to links with authentication (JWT)
 
 ## :hammer: Installation
 1. Clone Project `git clone git@github.com:jsv1280/hackernews-jairo.git`
